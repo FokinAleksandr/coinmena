@@ -2,7 +2,7 @@ import React from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { useCovidCasesSummary } from '~/src/api/useCovidCasesSummary';
+import { useCovidCasesSummary } from '~/src/api/useQueries';
 import { colors, setOpacity } from '~/src/ui/colors';
 import { CovidData } from '~/src/ui/CovidData';
 import { Box, Column } from '~/src/ui/layouts/layoutComponents';
@@ -86,7 +86,6 @@ const styles = StyleSheet.create({
     backgroundColor: setOpacity(colors.electric, 0.2),
     marginRight: 12,
     marginBottom: 12,
-    color: colors.white,
   },
   flatList: {
     flex: 1,

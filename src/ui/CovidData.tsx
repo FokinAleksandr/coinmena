@@ -30,7 +30,7 @@ export function CovidData(props: Props) {
         />
       </Box>
       <Typography variant="h3" color={colors.fireOral}>
-        dead percentage: {deadPercentage.toFixed(2)}%
+        dead percentage: {deadPercentage.toFixed(4)}%
       </Typography>
 
       <Box backgroundColor="orange" height={30} marginTop={8}>
@@ -41,7 +41,7 @@ export function CovidData(props: Props) {
         />
       </Box>
       <Typography variant="h3" color={colors.appleGreen}>
-        recovered percentage: {recoveredPercentage.toFixed(2)}%
+        recovered percentage: {recoveredPercentage.toFixed(4)}%
       </Typography>
     </Column>
   );

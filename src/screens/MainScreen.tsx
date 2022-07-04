@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ActivityIndicator, Button, StyleSheet } from 'react-native';
 
-import { useCovidCasesSummary } from '~/src/api/useCovidCasesSummary';
+import { useCovidCasesSummary } from '~/src/api/useQueries';
 import { useNavigation } from '~/src/navigation';
 import { colors } from '~/src/ui/colors';
 import { CovidData } from '~/src/ui/CovidData';
@@ -39,7 +39,9 @@ function CountriesCard() {
   if (data) {
     return (
       <Column>
-        <Typography variant="h2">Top 5 countries by total cases: </Typography>
+        <Box marginBottom={8}>
+          <Typography variant="h2">Top 5 countries by total cases: </Typography>
+        </Box>
         {data.Countries.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)
           .slice(0, 5)
           .map(item => (
