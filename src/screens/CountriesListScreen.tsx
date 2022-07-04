@@ -29,7 +29,7 @@ export function CountriesListScreen() {
     );
 
     return (
-      <Column flex={1} margin={24}>
+      <Column flex={1} marginTop={24} marginHorizontal={24}>
         <TextInput
           style={styles.input}
           autoCapitalize="none"
@@ -49,21 +49,20 @@ export function CountriesListScreen() {
           setOpen={setIsOpen}
           setValue={setSortBy}
         />
-        <Box marginTop={12}>
-          <FlatList
-            data={filteredData}
-            renderItem={({ item }) => (
-              <Column key={item.ID} marginBottom={8}>
-                <Typography variant="h1">{item.Country}</Typography>
-                <CovidData
-                  confirmed={item.TotalConfirmed}
-                  deaths={item.TotalDeaths}
-                  recovered={item.TotalRecovered}
-                />
-              </Column>
-            )}
-          />
-        </Box>
+        <FlatList
+          style={styles.flatList}
+          data={filteredData}
+          renderItem={({ item }) => (
+            <Column key={item.ID} marginBottom={8}>
+              <Typography variant="h1">{item.Country}</Typography>
+              <CovidData
+                confirmed={item.TotalConfirmed}
+                deaths={item.TotalDeaths}
+                recovered={item.TotalRecovered}
+              />
+            </Column>
+          )}
+        />
       </Column>
     );
   }
@@ -88,5 +87,9 @@ const styles = StyleSheet.create({
     marginRight: 12,
     marginBottom: 12,
     color: colors.white,
+  },
+  flatList: {
+    flex: 1,
+    marginTop: 12,
   },
 });

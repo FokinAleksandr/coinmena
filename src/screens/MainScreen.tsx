@@ -16,13 +16,13 @@ export function MainScreen() {
       <Row justifyContent="flex-end">
         <Button title="add case" onPress={() => navigate('ReportCase')} />
       </Row>
-      <Column margin={24} padding={8} style={styles.border}>
+      <Column margin={12} padding={8} style={styles.border}>
         <Typography isBold variant="h1">
           Countries card
         </Typography>
         <CountriesCard />
       </Column>
-      <Column margin={24} padding={8} style={styles.border}>
+      <Column margin={12} padding={8} style={styles.border}>
         <Typography isBold variant="h1">
           Global cases statistics card
         </Typography>
