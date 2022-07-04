@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { ActivityIndicator, Button, StyleSheet } from 'react-native';
-import { useQuery } from 'react-query';
 
-import { makeRequest } from '~/src/api/makeRequest';
-import type { TotalSummaryType } from '~/src/entities/totalSummary';
+import { useCovidCasesSummary } from '~/src/api/useCovidCasesSummary';
 import { useNavigation } from '~/src/navigation';
 import { colors } from '~/src/ui/colors';
+import { CovidData } from '~/src/ui/CovidData';
 import { Box, Column, Row } from '~/src/ui/layouts/layoutComponents';
 import { Typography } from '~/src/ui/Typography';
 
@@ -34,21 +33,18 @@ export function MainScreen() {
 }
 
 function CountriesCard() {
-  const { data, isLoading } = useQuery('something', () =>
-    makeRequest<TotalSummaryType>('/summary')
-  );
-
+  const { data, isLoading } = useCovidCasesSummary();
   const { navigate } = useNavigation();
 
   if (data) {
     return (
       <Column>
+        <Typography variant="h2">Top 5 countries by total cases: </Typography>
         {data.Countries.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)
           .slice(0, 5)
           .map(item => (
             <Box key={item.ID}>
               <Typography variant="h3">{item.Country}</Typography>
-              <Typography variant="h3">{item.TotalConfirmed}</Typography>
             </Box>
           ))}
         <Button title="load more" onPress={() => navigate('CountriesList')} />
@@ -68,10 +64,16 @@ function CountriesCard() {
 }
 
 function GlobalCasesStatisticsCard() {
-  const { data, isLoading } = useQuery('worldTotal', () => makeRequest(`/world/total`));
+  const { data, isLoading } = useCovidCasesSummary();
 
   if (data) {
-    return <Typography variant="h2">{JSON.stringify(data, null, 2)}</Typography>;
+    return (
+      <CovidData
+        confirmed={data.Global.TotalConfirmed}
+        deaths={data.Global.TotalDeaths}
+        recovered={data.Global.TotalRecovered}
+      />
+    );
   }
 
   if (isLoading) {
@@ -89,5 +91,6 @@ export const styles = StyleSheet.create({
   border: {
     borderWidth: 1,
     borderColor: colors.charcoal,
+    borderRadius: 4,
   },
 });
