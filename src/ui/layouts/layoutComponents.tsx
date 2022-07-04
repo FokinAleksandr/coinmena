@@ -30,8 +30,9 @@ type StyleProps = {
   paddingHorizontal?: Spaces;
   paddingVertical?: Spaces;
   children?: React.ReactNode;
-  width?: Spaces;
-  height?: Spaces;
+  width?: number;
+  height?: number;
+  backgroundColor?: string;
 };
 
 export function Box(props: StyleProps) {

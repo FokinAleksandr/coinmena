@@ -6,7 +6,7 @@
       "react-hooks",
       "react",
       "react-native",
-      "simple-import-sort",
+      "simple-import-sort"
   ],
   "parserOptions": {
     "project": "./tsconfig.json",
