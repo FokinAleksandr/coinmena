@@ -5,7 +5,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useCovidCasesSummary } from '~/src/api/useQueries';
 import { colors, setOpacity } from '~/src/ui/colors';
 import { CovidData } from '~/src/ui/CovidData';
-import { Box, Column } from '~/src/ui/layouts/layoutComponents';
+import { Column } from '~/src/ui/layouts/layoutComponents';
 import { Typography } from '~/src/ui/Typography';
 
 export function CountriesListScreen() {
