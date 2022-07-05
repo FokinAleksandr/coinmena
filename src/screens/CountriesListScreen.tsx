@@ -2,31 +2,33 @@ import React from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, TextInput } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 
-import { useCovidCasesSummary } from '~/src/api/useQueries';
+import { useCountriesCovidStatistics } from '~/src/api/useQueries';
 import { colors, setOpacity } from '~/src/ui/colors';
 import { CovidData } from '~/src/ui/CovidData';
 import { Column } from '~/src/ui/layouts/layoutComponents';
 import { Typography } from '~/src/ui/Typography';
 
 export function CountriesListScreen() {
-  const { data, isLoading } = useCovidCasesSummary();
+  const { data: countries, isLoading } = useCountriesCovidStatistics();
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [filterText, setFilterText] = React.useState('');
   const [sortBy, setSortBy] = React.useState<'confirmed' | 'deaths' | 'recovered'>('confirmed');
 
-  if (data) {
-    const filteredData = data.Countries.sort((a, b) => {
-      if (sortBy === 'deaths') {
-        return b.TotalDeaths - a.TotalDeaths;
-      } else if (sortBy === 'recovered') {
-        return b.TotalRecovered - a.TotalRecovered;
-      } else {
-        return b.TotalConfirmed - a.TotalConfirmed;
-      }
-    }).filter(country =>
-      country.Country.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
-    );
+  if (countries) {
+    const filteredData = countries
+      .sort((a, b) => {
+        if (sortBy === 'deaths') {
+          return b.TotalDeaths - a.TotalDeaths;
+        } else if (sortBy === 'recovered') {
+          return b.TotalRecovered - a.TotalRecovered;
+        } else {
+          return b.TotalConfirmed - a.TotalConfirmed;
+        }
+      })
+      .filter(country =>
+        country.Country.toLocaleLowerCase().includes(filterText.toLocaleLowerCase())
+      );
 
     return (
       <Column flex={1} marginTop={24} marginHorizontal={24}>

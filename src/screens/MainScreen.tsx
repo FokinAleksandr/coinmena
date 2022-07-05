@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ActivityIndicator, Button, StyleSheet } from 'react-native';
 
-import { useCovidCasesSummary } from '~/src/api/useQueries';
+import { useCountriesCovidStatistics, useGlobalCovidStatistics } from '~/src/api/useQueries';
 import { useNavigation } from '~/src/navigation';
 import { colors } from '~/src/ui/colors';
 import { CovidData } from '~/src/ui/CovidData';
@@ -33,16 +33,17 @@ export function MainScreen() {
 }
 
 function CountriesCard() {
-  const { data, isLoading } = useCovidCasesSummary();
+  const { data: countries, isLoading } = useCountriesCovidStatistics();
   const { navigate } = useNavigation();
 
-  if (data) {
+  if (countries) {
     return (
       <Column>
         <Box marginBottom={8}>
           <Typography variant="h2">Top 5 countries by total cases: </Typography>
         </Box>
-        {data.Countries.sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)
+        {countries
+          .sort((a, b) => b.TotalConfirmed - a.TotalConfirmed)
           .slice(0, 5)
           .map(item => (
             <Box key={item.ID}>
@@ -66,14 +67,14 @@ function CountriesCard() {
 }
 
 function GlobalCasesStatisticsCard() {
-  const { data, isLoading } = useCovidCasesSummary();
+  const { data, isLoading } = useGlobalCovidStatistics();
 
   if (data) {
     return (
       <CovidData
-        confirmed={data.Global.TotalConfirmed}
-        deaths={data.Global.TotalDeaths}
-        recovered={data.Global.TotalRecovered}
+        confirmed={data.TotalConfirmed}
+        deaths={data.TotalDeaths}
+        recovered={data.TotalRecovered}
       />
     );
   }

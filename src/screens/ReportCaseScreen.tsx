@@ -3,7 +3,7 @@ import { ActivityIndicator, Button } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useQueryClient } from 'react-query';
 
-import { useCountries } from '~/src/api/useQueries';
+import { useListAllCountries } from '~/src/api/useQueries';
 import type { TotalSummaryType } from '~/src/entities/totalSummary';
 import { useNavigation } from '~/src/navigation';
 import { colors } from '~/src/ui/colors';
@@ -11,7 +11,7 @@ import { Column } from '~/src/ui/layouts/layoutComponents';
 import { Typography } from '~/src/ui/Typography';
 
 export function ReportCaseScreen() {
-  const { data, isLoading } = useCountries();
+  const { data: countries, isLoading } = useListAllCountries();
   const { goBack } = useNavigation();
 
   const [isCountriesOpen, setIsCountriesOpen] = useState(false);
@@ -22,6 +22,9 @@ export function ReportCaseScreen() {
   const queryClient = useQueryClient();
 
   const handleSubmit = () => {
+    if (!selectedCountry) {
+      return;
+    }
     queryClient.setQueryData<TotalSummaryType | undefined>('totalSummary', data => {
       if (!data) {
         return data;
@@ -55,14 +58,14 @@ export function ReportCaseScreen() {
   };
 
   const renderCountriesDropDown = () => {
-    if (data) {
+    if (countries) {
       return (
         <DropDownPicker
           zIndex={2000}
           zIndexInverse={2000}
           open={isCountriesOpen}
           value={selectedCountry}
-          items={data.map(item => ({ label: item.Country, value: item.Slug }))}
+          items={countries.map(item => ({ label: item.Country, value: item.Slug }))}
           setOpen={setIsCountriesOpen}
           setValue={setSelectedCountry}
         />
